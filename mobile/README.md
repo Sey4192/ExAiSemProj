@@ -1,4 +1,4 @@
-# EXAI Mobile App: Setup Guide
+# Tymeout Mobile App: Setup Guide
 
 React Native (Expo) app for the Explainable AI-Based Persuasive System.
 It calls the Flask backend (see `backend/README.md`) for predictions,

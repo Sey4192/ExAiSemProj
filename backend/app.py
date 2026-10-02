@@ -1,5 +1,5 @@
 """
-EXAI Backend API
+Tymeout Backend API
 -----------------
 A small Flask API that wraps the existing prediction + explainability
 pipeline (Chapter 3, Section 3.3: Prediction Engine, Explainability
@@ -223,7 +223,7 @@ def metrics():
 
 if __name__ == "__main__":
     load_everything()
-    print("\nEXAI backend ready.")
+    print("\nTymeout backend ready.")
     print("Local:   http://localhost:5000")
     print("Network: http://<your-laptop-IP>:5000  (use this from Expo Go on your phone)\n")
     app.run(host="0.0.0.0", port=5000, debug=True)

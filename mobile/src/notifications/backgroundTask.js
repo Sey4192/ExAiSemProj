@@ -3,6 +3,7 @@ import * as TaskManager from "expo-task-manager";
 import { loadHistory, loadReminders } from "../storage/storage";
 import { planReminders } from "./notifications";
 
+// Internal ID; keeps its pre-rename "exai" prefix so an already-registered task still matches.
 export const BACKGROUND_TASK = "exai-background-refresh";
 
 // Runs every so often while the app is closed (the OS decides exactly

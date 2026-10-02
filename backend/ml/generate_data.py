@@ -1,5 +1,5 @@
 """
-Simulated behavioural dataset generator for the EXAI project.
+Simulated behavioural dataset generator for the Tymeout project.
 
 Generates synthetic social-media usage SESSIONS with four features
 (matching the approved proposal, Section 6):

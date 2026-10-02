@@ -1,9 +1,9 @@
-# EXAI: Explainable AI-Based Persuasive System for Reducing Social Media Usage
+# Tymeout: Explainable AI-Based Persuasive System for Reducing Social Media Usage
 
 Final-year project, BSc Information Technology, Department of Computer Science,
 University of Ghana.
 
-EXAI predicts when a social media session is becoming high-risk, explains the
+Tymeout predicts when a social media session is becoming high-risk, explains the
 prediction with two explainable-AI methods (SHAP and LIME), and responds with a
 gentle, matching intervention through a mobile app.
 

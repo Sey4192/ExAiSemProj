@@ -59,5 +59,5 @@ export function getModelMetrics() {
 }
 
 export const CONNECTION_HELP =
-  "I can't reach the EXAI server right now. Is app.py running on your laptop, and is your " +
+  "I can't reach the Tymeout server right now. Is app.py running on your laptop, and is your " +
   "phone on the same Wi-Fi? You can check the address in Settings.";

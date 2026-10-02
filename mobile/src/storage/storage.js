@@ -2,6 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Everything is stored only on the device -- usage data never leaves
 // the phone except to be scored by your own backend.
+// Keys keep the original "exai" prefix from before the app was renamed to
+// Tymeout, so check-ins already saved on a phone are not lost.
 const KEYS = {
   history: "exai.history.v1",
   onboarded: "exai.onboarded.v1",

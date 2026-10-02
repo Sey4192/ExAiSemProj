@@ -8,7 +8,7 @@ import { colors } from "../theme/theme";
 const CHANNEL_CHECKINS = "checkins";
 const CHANNEL_COMPANION = "companion";
 const CATEGORY_CHECKIN = "checkin";
-const COMPANION_ID = "exai-companion";
+const COMPANION_ID = "exai-companion"; // pre-rename ID, so an existing pinned notification can still be removed
 const DAYS_AHEAD = 3;
 
 // Each slot has a few phrasings so reminders don't feel copy-pasted.
@@ -75,7 +75,7 @@ export async function configureNotifications() {
     // Silent and low priority, so the always-there shortcut never buzzes.
     await Notifications.setNotificationChannelAsync(CHANNEL_COMPANION, {
       name: "Quick check-in shortcut",
-      description: "Keeps EXAI one tap away in your notifications",
+      description: "Keeps Tymeout one tap away in your notifications",
       importance: Notifications.AndroidImportance.LOW,
       sound: null,
       vibrationPattern: null,
@@ -176,7 +176,7 @@ export async function setCompanion(enabled) {
   await Notifications.scheduleNotificationAsync({
     identifier: COMPANION_ID,
     content: {
-      title: "EXAI is here when you need it",
+      title: "Tymeout is here when you need it",
       body: "Tap to check in on how your scrolling's going.",
       data: { screen: "Check", kind: "companion" },
       sticky: true,

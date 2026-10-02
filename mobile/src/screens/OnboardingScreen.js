@@ -12,7 +12,7 @@ import { tap } from "../utils/haptics";
 const SLIDES = [
   {
     key: "hello",
-    title: "Hey, I'm EXAI 👋",
+    title: "Hey, I'm Tymeout 👋",
     text: "I'm here to help you notice when scrolling stops feeling good. No judgement, no lectures, and I won't take over your phone.",
   },
   {
@@ -89,7 +89,7 @@ function SlideArt({ slide, name }) {
             <View style={styles.mockNotifIcon}>
               <MaterialCommunityIcons name="leaf" size={12} color="#fff" />
             </View>
-            <Text style={styles.mockNotifApp}>EXAI · now</Text>
+            <Text style={styles.mockNotifApp}>Tymeout · now</Text>
           </View>
           <Text style={styles.mockNotifTitle}>How was today{name ? `, ${name}` : ""}?</Text>
           <Text style={styles.mockNotifBody}>Got a minute? Let's look at how your day on your phone went.</Text>
@@ -156,7 +156,7 @@ export default function OnboardingScreen() {
       <View style={[styles.top, { paddingTop: insets.top + spacing.md }]}>
         <View style={styles.brand}>
           <MaterialCommunityIcons name="leaf" size={20} color="#fff" />
-          <Text style={styles.brandText}>EXAI</Text>
+          <Text style={styles.brandText}>Tymeout</Text>
         </View>
         {!last ? (
           <Pressable onPress={() => goTo(SLIDES.length - 1)} hitSlop={10}>

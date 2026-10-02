@@ -55,7 +55,7 @@ function Splash({ fontsReady }) {
     <LinearGradient colors={gradients.primary} style={styles.splash}>
       <MaterialCommunityIcons name="leaf" size={48} color="#fff" />
       {/* The brand font may not be loaded yet, so only use it once it is. */}
-      <Text style={[styles.splashText, !fontsReady && { fontFamily: undefined, fontWeight: "800" }]}>EXAI</Text>
+      <Text style={[styles.splashText, !fontsReady && { fontFamily: undefined, fontWeight: "800" }]}>Tymeout</Text>
       <ActivityIndicator color="#fff" style={{ marginTop: 24 }} />
     </LinearGradient>
   );

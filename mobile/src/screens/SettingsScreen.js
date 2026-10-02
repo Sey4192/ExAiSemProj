@@ -76,7 +76,7 @@ export default function SettingsScreen({ navigation }) {
     if (!granted) {
       Alert.alert(
         "Notifications are off",
-        "No problem. If you change your mind, you can allow notifications for EXAI in your phone's settings.",
+        "No problem. If you change your mind, you can allow notifications for Tymeout in your phone's settings.",
         [
           { text: "Not now", style: "cancel" },
           { text: "Open settings", onPress: () => Linking.openSettings() },
@@ -160,7 +160,7 @@ export default function SettingsScreen({ navigation }) {
         <SectionHeader title="Connection" />
         <SurfaceCard>
           <Text style={styles.help}>
-            Where your EXAI server is running. Use your laptop's Wi-Fi address, not "localhost".
+            Where your Tymeout server is running. Use your laptop's Wi-Fi address, not "localhost".
           </Text>
           <TextInput
             mode="outlined"
@@ -212,7 +212,7 @@ export default function SettingsScreen({ navigation }) {
           <IconBadge icon="shield-lock-outline" size={40} />
           <Text style={[styles.help, { flex: 1, marginLeft: spacing.md - 4, marginBottom: 0 }]}>
             Your {history.length} check-in{history.length === 1 ? "" : "s"}, your name and your moods stay on this phone. Sessions
-            are only sent to your own EXAI server to be understood, never anywhere else.
+            are only sent to your own Tymeout server to be understood, never anywhere else.
           </Text>
         </SurfaceCard>
         <Button
@@ -226,10 +226,10 @@ export default function SettingsScreen({ navigation }) {
           Clear my check-ins
         </Button>
 
-        <SectionHeader title="About EXAI" />
+        <SectionHeader title="About Tymeout" />
         <SurfaceCard>
           <Text style={styles.help}>
-            EXAI helps you notice when scrolling stops feeling good, and always explains why, so the choice of what to do next
+            Tymeout helps you notice when scrolling stops feeling good, and always explains why, so the choice of what to do next
             stays yours.
           </Text>
           <Text style={styles.help}>

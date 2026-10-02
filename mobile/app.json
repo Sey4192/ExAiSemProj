@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "EXAI",
-    "slug": "mobile",
+    "name": "Tymeout",
+    "slug": "tymeout",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
