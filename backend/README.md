@@ -89,6 +89,23 @@ curl -X POST http://localhost:5000/predict \
 The response contains the risk label and probability, the SHAP and LIME
 explanations, and the selected intervention.
 
+## 8. Hosting online (Render)
+
+The repository includes `render.yaml`, so the backend can be hosted on
+[Render](https://render.com)'s free tier:
+
+1. Sign in to Render with GitHub and choose **New > Blueprint**.
+2. Select this repository. Render reads `render.yaml`, installs the
+   pinned requirements, retrains the model from the fixed-seed simulation
+   (so it matches the committed results) and starts it with gunicorn
+   through `wsgi.py`, without Flask's debugger.
+3. When the deploy finishes, the API is available at
+   `https://<service-name>.onrender.com`, for example
+   `https://<service-name>.onrender.com/health`.
+
+On the free tier the service sleeps after about 15 minutes without
+requests, and the first request afterwards can take up to a minute.
+
 ## API reference
 
 ### `GET /health`

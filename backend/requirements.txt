@@ -1,10 +1,13 @@
-flask
-flask-cors
-scikit-learn
-shap
-lime
-pandas
-numpy
-joblib
-matplotlib
-pytest
+# Versions pinned to the environment in which the 17 tests pass.
+flask==3.1.3
+flask-cors==6.0.5
+scikit-learn==1.9.1
+shap==0.52.0
+lime==0.2.0.1
+pandas==3.0.6
+numpy==2.5.3
+joblib==1.6.0
+matplotlib==3.11.2
+pytest==9.1.1
+# Production server for hosting (Linux only; not needed for local use on Windows)
+gunicorn==23.0.0; sys_platform != "win32"

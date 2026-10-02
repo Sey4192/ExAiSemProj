@@ -40,6 +40,22 @@ npx expo start
 Scan the QR code with Expo Go. After installing new packages, start with
 `npx expo start --clear` to reset the bundler cache.
 
+## 4b. Build an installable APK (Android)
+
+Requirements: JDK 17 and the Android SDK (platform 36, build-tools
+36.0.0, NDK 27.1.12297006), with `JAVA_HOME` and `ANDROID_HOME` set.
+
+```bash
+npx expo prebuild --platform android --clean
+cd android
+./gradlew assembleRelease        # Windows: gradlew.bat assembleRelease
+```
+
+The APK is written to `android/app/build/outputs/apk/release/app-release.apk`.
+The `android/` folder is generated from `app.json` and is not committed.
+Set `DEFAULT_API_BASE_URL` in `src/api/client.js` to the hosted backend
+before building, so the installed app works on any network.
+
 ## 5. What the app contains
 
 On first launch, a four-slide **onboarding** introduces the app, asks
