@@ -3,7 +3,7 @@
 // "localhost") -- your phone can't resolve "localhost" as your laptop.
 // Both devices must be on the same Wi-Fi network. If the IP changes,
 // you can also update it inside the app: Home -> settings icon.
-export const DEFAULT_API_BASE_URL = "http://192.168.8.153:5000"; // <-- EDIT THIS
+export const DEFAULT_API_BASE_URL = "http://192.168.0.155:5000"; // <-- EDIT THIS
 
 let baseUrl = DEFAULT_API_BASE_URL;
 

@@ -24,7 +24,7 @@ npm install
 Open `src/api/client.js` and set:
 
 ```js
-export const DEFAULT_API_BASE_URL = "http://192.168.8.153:5000"; // <-- EDIT THIS
+export const DEFAULT_API_BASE_URL = "http://192.168.0.155:5000"; // <-- EDIT THIS
 ```
 
 Replace the IP with your laptop's Wi-Fi address (`ipconfig` on Windows).
