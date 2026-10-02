@@ -1,4 +1,4 @@
-# Tymeout Backend: Setup Guide
+# EXAI Backend: Setup Guide
 
 This is the Python/Flask backend for the Explainable AI-Based Persuasive
 System. It wraps the Random Forest prediction engine, the SHAP/LIME
@@ -52,7 +52,7 @@ python app.py
 The server prints:
 
 ```
-Tymeout backend ready.
+EXAI backend ready.
 Local:   http://localhost:5000
 Network: http://<your-laptop-IP>:5000
 ```

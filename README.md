@@ -1,18 +1,18 @@
-# Tymeout: Explainable AI-Based Persuasive System for Reducing Social Media Usage
+# EXAI: Explainable AI-Based Persuasive System for Reducing Social Media Usage
 
 Final-year project, BSc Information Technology, Department of Computer Science,
 University of Ghana.
 
-Tymeout predicts when a social media session is becoming high-risk, explains the
+EXAI predicts when a social media session is becoming high-risk, explains the
 prediction with two explainable-AI methods (SHAP and LIME), and responds with a
-gentle, matching intervention through a mobile app.
+gentle, matching intervention through a mobile app called **Tymeout**.
 
 ## Repository layout
 
 | Folder | Contents |
 |---|---|
 | [`backend/`](backend/) | Python: simulated dataset, Random Forest model, SHAP/LIME explainability, rule-based persuasion engine, 17 automated tests, and the Flask API |
-| [`mobile/`](mobile/) | React Native (Expo) app: check-ins, alerts, explanations, history, insights, and check-in reminders |
+| [`mobile/`](mobile/) | Tymeout, the React Native (Expo) app: check-ins, alerts, explanations, history, insights, and check-in reminders |
 
 Each folder has its own README with setup steps. Start the backend first, then
 the mobile app.
