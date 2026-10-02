@@ -1,0 +1,10 @@
+flask
+flask-cors
+scikit-learn
+shap
+lime
+pandas
+numpy
+joblib
+matplotlib
+pytest

@@ -1,0 +1,25 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\LENOVO\Downloads\New folder\backend\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\LENOVO\Downloads\New folder\backend\ml
+collecting ... collected 17 items
+
+test_pipeline.py::test_generate_dataset_shape PASSED                     [  5%]
+test_pipeline.py::test_generate_dataset_columns PASSED                   [ 11%]
+test_pipeline.py::test_generate_dataset_value_ranges PASSED              [ 17%]
+test_pipeline.py::test_generate_dataset_class_balance_not_degenerate PASSED [ 23%]
+test_pipeline.py::test_generate_dataset_reproducible_with_seed PASSED    [ 29%]
+test_pipeline.py::test_model_predicts_binary_labels PASSED               [ 35%]
+test_pipeline.py::test_model_predict_proba_sums_to_one PASSED            [ 41%]
+test_pipeline.py::test_model_meets_minimum_accuracy_threshold PASSED     [ 47%]
+test_pipeline.py::test_model_feature_importances_nonzero_for_all_features PASSED [ 52%]
+test_pipeline.py::test_explainability_results_file_structure PASSED      [ 58%]
+test_pipeline.py::test_explainability_agreement_rate_within_valid_range PASSED [ 64%]
+test_pipeline.py::test_intervention_selection_rules[0.2-frequency-none] PASSED [ 70%]
+test_pipeline.py::test_intervention_selection_rules[0.8-session_duration_min-gentle_limit] PASSED [ 76%]
+test_pipeline.py::test_intervention_selection_rules[0.7-frequency-reminder] PASSED [ 82%]
+test_pipeline.py::test_intervention_selection_rules[0.9-screen_time_hrs-motivational_message] PASSED [ 88%]
+test_pipeline.py::test_intervention_selection_rules[0.6-hour_of_day-reminder] PASSED [ 94%]
+test_pipeline.py::test_intervention_selection_is_total PASSED            [100%]
+
+============================= 17 passed in 2.69s ==============================

@@ -1,0 +1,74 @@
+{
+  "shap_global_importance": {
+    "screen_time_hrs": 0.1122,
+    "frequency": 0.0776,
+    "session_duration_min": 0.1155,
+    "hour_of_day": 0.0119
+  },
+  "n_instances_compared": 40,
+  "mean_spearman_rho_shap_vs_lime": 0.83,
+  "std_spearman_rho": 0.302,
+  "top_feature_agreement_rate": 0.85,
+  "worked_examples": [
+    {
+      "session": {
+        "screen_time_hrs": 3.24,
+        "frequency": 23.0,
+        "session_duration_min": 4.4,
+        "hour_of_day": 17.0
+      },
+      "top_feature_shap": "frequency",
+      "top_feature_lime": "frequency",
+      "agree_on_top_feature": true,
+      "spearman_rho": 1.0
+    },
+    {
+      "session": {
+        "screen_time_hrs": 6.14,
+        "frequency": 20.0,
+        "session_duration_min": 6.5,
+        "hour_of_day": 6.0
+      },
+      "top_feature_shap": "screen_time_hrs",
+      "top_feature_lime": "screen_time_hrs",
+      "agree_on_top_feature": true,
+      "spearman_rho": 0.8
+    },
+    {
+      "session": {
+        "screen_time_hrs": 2.36,
+        "frequency": 22.0,
+        "session_duration_min": 11.6,
+        "hour_of_day": 19.0
+      },
+      "top_feature_shap": "frequency",
+      "top_feature_lime": "session_duration_min",
+      "agree_on_top_feature": false,
+      "spearman_rho": 0.8
+    },
+    {
+      "session": {
+        "screen_time_hrs": 3.05,
+        "frequency": 28.0,
+        "session_duration_min": 5.8,
+        "hour_of_day": 12.0
+      },
+      "top_feature_shap": "frequency",
+      "top_feature_lime": "frequency",
+      "agree_on_top_feature": true,
+      "spearman_rho": 1.0
+    },
+    {
+      "session": {
+        "screen_time_hrs": 2.62,
+        "frequency": 21.0,
+        "session_duration_min": 6.2,
+        "hour_of_day": 12.0
+      },
+      "top_feature_shap": "frequency",
+      "top_feature_lime": "session_duration_min",
+      "agree_on_top_feature": false,
+      "spearman_rho": 0.8
+    }
+  ]
+}
