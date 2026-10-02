@@ -1,0 +1,28 @@
+# Python
+backend/venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated model and data (recreate with backend/ml/generate_data.py and train_model.py)
+backend/results/*.joblib
+backend/results/*.csv
+
+# Node / Expo
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+*.log
+npm-debug.*
+
+# Expo template files not used by this project
+mobile/LICENSE
+mobile/AGENTS.md
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
