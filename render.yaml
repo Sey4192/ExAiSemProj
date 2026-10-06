@@ -1,4 +1,5 @@
-# Render blueprint for hosting the EXAI backend that the Tymeout app calls.
+# Render blueprint for hosting the EXAI backend that the Tymeout app calls,
+# plus the web version of the app for use on a computer.
 # The model is retrained at build time from the fixed-seed simulation, so it
 # matches the committed results exactly.
 services:
@@ -13,3 +14,22 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.4
+
+  # The Tymeout app built for the browser (Expo web export).
+  # If Render gives the API a different address than below, update
+  # EXPO_PUBLIC_API_URL here and redeploy.
+  - type: web
+    name: tymeout
+    runtime: static
+    rootDir: mobile
+    buildCommand: npm ci && npx expo export --platform web
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: 22.23.3
+      - key: EXPO_PUBLIC_API_URL
+        value: https://tymeout-api.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

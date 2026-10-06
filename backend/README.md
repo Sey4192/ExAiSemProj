@@ -106,6 +106,11 @@ The repository includes `render.yaml`, so the backend can be hosted on
 On the free tier the service sleeps after about 15 minutes without
 requests, and the first request afterwards can take up to a minute.
 
+The same blueprint also builds the web version of the Tymeout app as a
+static site (`tymeout`). It expects the API at
+`https://tymeout-api.onrender.com`; if Render assigns a different
+address, change `EXPO_PUBLIC_API_URL` in `render.yaml` to match.
+
 ## API reference
 
 ### `GET /health`

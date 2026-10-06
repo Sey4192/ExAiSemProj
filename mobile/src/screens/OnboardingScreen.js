@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import { Keyboard, Pressable, ScrollView, StyleSheet, TextInput, View, useWindowDimensions } from "react-native";
+import { Keyboard, Pressable, ScrollView, StyleSheet, TextInput, View } from "react-native";
+import { useAppWidth } from "../utils/layout";
 import { Button, Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -114,7 +115,7 @@ function SlideArt({ slide, name }) {
 
 export default function OnboardingScreen() {
   const { completeOnboarding, updateProfile, enableNotifications } = useApp();
-  const { width } = useWindowDimensions();
+  const width = useAppWidth();
   const insets = useSafeAreaInsets();
   const scroller = useRef(null);
   const [index, setIndex] = useState(0);

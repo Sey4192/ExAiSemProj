@@ -24,10 +24,13 @@ npm install
 Open `src/api/client.js` and set:
 
 ```js
-export const DEFAULT_API_BASE_URL = "http://192.168.0.155:5000"; // <-- EDIT THIS
+export const DEFAULT_API_BASE_URL =
+  process.env.EXPO_PUBLIC_API_URL || "http://192.168.8.153:5000"; // <-- EDIT THIS
 ```
 
 Replace the IP with your laptop's Wi-Fi address (`ipconfig` on Windows).
+Release builds set `EXPO_PUBLIC_API_URL` to the hosted backend instead
+(section 4b), so the IP only matters for local development.
 If the address changes later, it can also be updated inside the app
 under **Home > settings icon > Connection**, which has a **Test** button.
 
@@ -40,6 +43,23 @@ npx expo start
 Scan the QR code with Expo Go. After installing new packages, start with
 `npx expo start --clear` to reset the bundler cache.
 
+## 4a. Run it on a computer (web)
+
+The same app runs in a browser through React Native Web. With
+`npx expo start` running, press `w` or open <http://localhost:8081>. On a
+wide screen the app keeps a phone-sized column in the middle of the
+window. Check-in reminders are phone-only, because browsers cannot
+schedule local notifications; everything else works the same.
+
+To build the website for hosting:
+
+```bash
+EXPO_PUBLIC_API_URL=https://<api-service>.onrender.com npx expo export --platform web
+```
+
+The site is written to `dist/`. The Render blueprint (`render.yaml`)
+builds and hosts it as the `tymeout` static site.
+
 ## 4b. Build an installable APK (Android)
 
 Requirements: JDK 17 and the Android SDK (platform 36, build-tools
@@ -48,13 +68,18 @@ Requirements: JDK 17 and the Android SDK (platform 36, build-tools
 ```bash
 npx expo prebuild --platform android --clean
 cd android
-./gradlew assembleRelease        # Windows: gradlew.bat assembleRelease
+EXPO_PUBLIC_API_URL=https://<api-service>.onrender.com ./gradlew assembleRelease
+# Windows (PowerShell): $env:EXPO_PUBLIC_API_URL="https://..."; .\gradlew.bat assembleRelease
 ```
 
 The APK is written to `android/app/build/outputs/apk/release/app-release.apk`.
 The `android/` folder is generated from `app.json` and is not committed.
-Set `DEFAULT_API_BASE_URL` in `src/api/client.js` to the hosted backend
-before building, so the installed app works on any network.
+`EXPO_PUBLIC_API_URL` points the installed app at the hosted backend, so
+it works on any network.
+
+The native build compiles a lot of C++ and needs plenty of free memory.
+On a laptop with 8 GB of RAM, close other programs first and limit Gradle
+to one task at a time: add `--max-workers=1 -Dorg.gradle.parallel=false`.
 
 ## 5. What the app contains
 

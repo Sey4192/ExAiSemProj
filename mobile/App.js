@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Platform, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Platform, StyleSheet, View, useWindowDimensions } from "react-native";
 import { PaperProvider, Text } from "react-native-paper";
 import { NavigationContainer, createNavigationContainerRef } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -30,6 +30,7 @@ import BreakScreen from "./src/screens/BreakScreen";
 import SettingsScreen from "./src/screens/SettingsScreen";
 import OnboardingScreen from "./src/screens/OnboardingScreen";
 import TabBar from "./src/components/TabBar";
+import { WEB_FRAME_WIDTH, isFramed } from "./src/utils/layout";
 import * as Notifications from "expo-notifications";
 // Imported for its side effect: defines the background task at startup,
 // which the OS requires before it can run the task with the app closed.
@@ -103,6 +104,18 @@ function Root({ fontsReady }) {
   );
 }
 
+// On a computer's browser the app keeps a phone-sized column in the
+// middle of the window, so its layouts aren't stretched edge to edge.
+function WebFrame({ children }) {
+  const { width } = useWindowDimensions();
+  if (!isFramed(width)) return children;
+  return (
+    <View style={styles.webBackdrop}>
+      <View style={styles.webFrame}>{children}</View>
+    </View>
+  );
+}
+
 export default function App() {
   // If a font fails to load we still start; text falls back to the system font.
   const [fontsLoaded, fontError] = useFonts({
@@ -118,9 +131,11 @@ export default function App() {
       <PaperProvider theme={paperTheme}>
         <AppProvider>
           <StatusBar style="light" />
-          <View style={styles.root}>
-            <Root fontsReady={fontsLoaded || !!fontError} />
-          </View>
+          <WebFrame>
+            <View style={styles.root}>
+              <Root fontsReady={fontsLoaded || !!fontError} />
+            </View>
+          </WebFrame>
         </AppProvider>
       </PaperProvider>
     </SafeAreaProvider>
@@ -129,6 +144,13 @@ export default function App() {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.background },
+  webBackdrop: { flex: 1, alignItems: "center", backgroundColor: "#DCE6EC" },
+  webFrame: {
+    flex: 1,
+    width: WEB_FRAME_WIDTH,
+    overflow: "hidden",
+    boxShadow: "0 0 40px rgba(30, 60, 80, 0.18)",
+  },
   splash: { flex: 1, alignItems: "center", justifyContent: "center" },
   splashText: { ...type.h1, color: "#fff", letterSpacing: 4, marginTop: 8 },
 });

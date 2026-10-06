@@ -1,9 +1,12 @@
 // API client for the Flask backend (see backend/README.md).
-// DEFAULT_API_BASE_URL is your laptop's local IP address (not
-// "localhost") -- your phone can't resolve "localhost" as your laptop.
-// Both devices must be on the same Wi-Fi network. If the IP changes,
-// you can also update it inside the app: Home -> settings icon.
-export const DEFAULT_API_BASE_URL = "http://192.168.0.155:5000"; // <-- EDIT THIS
+// For local development, DEFAULT_API_BASE_URL is your laptop's local IP
+// address (not "localhost") -- your phone can't resolve "localhost" as
+// your laptop. Both devices must be on the same Wi-Fi network. If the IP
+// changes, you can also update it inside the app: Home -> settings icon.
+// Release builds (APK, website) set EXPO_PUBLIC_API_URL to the hosted
+// backend instead, e.g. EXPO_PUBLIC_API_URL=https://tymeout-api.onrender.com
+export const DEFAULT_API_BASE_URL =
+  process.env.EXPO_PUBLIC_API_URL || "http://192.168.8.153:5000"; // <-- EDIT THIS
 
 let baseUrl = DEFAULT_API_BASE_URL;
 

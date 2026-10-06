@@ -114,7 +114,20 @@ export default function SettingsScreen({ navigation }) {
         </SurfaceCard>
 
         <SectionHeader title="Check-ins" />
-        {!notificationsAllowed ? (
+        {Platform.OS === "web" ? (
+          // Browsers can't schedule local notifications, so reminders are phone-only.
+          <SurfaceCard>
+            <View style={styles.row}>
+              <IconBadge icon="cellphone-message" size={44} />
+              <View style={{ flex: 1, marginLeft: spacing.md - 4 }}>
+                <Text style={styles.askTitle}>Reminders live on your phone</Text>
+                <Text style={styles.help}>
+                  Check-in reminders need the Tymeout app on Android. Everything else works right here.
+                </Text>
+              </View>
+            </View>
+          </SurfaceCard>
+        ) : !notificationsAllowed ? (
           <SurfaceCard style={styles.askCard}>
             <View style={styles.row}>
               <IconBadge icon="bell-badge-outline" size={44} />
