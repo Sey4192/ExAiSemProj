@@ -26,6 +26,7 @@ pip install -r requirements.txt
 python ml/generate_data.py
 python ml/train_model.py
 python ml/explainability.py
+python ml/evaluate_extra.py      # optional: cross-validation, ROC/PR curves, thresholds
 ```
 
 This creates `results/rf_model.joblib`, the evaluation metrics and the
