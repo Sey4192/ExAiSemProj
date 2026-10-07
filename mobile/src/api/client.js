@@ -1,12 +1,12 @@
 // API client for the Flask backend (see backend/README.md).
-// For local development, DEFAULT_API_BASE_URL is your laptop's local IP
-// address (not "localhost") -- your phone can't resolve "localhost" as
-// your laptop. Both devices must be on the same Wi-Fi network. If the IP
-// changes, you can also update it inside the app: Home -> settings icon.
-// Release builds (APK, website) set EXPO_PUBLIC_API_URL to the hosted
-// backend instead, e.g. EXPO_PUBLIC_API_URL=https://tymeout-api.onrender.com
+// By default the app uses the hosted backend on PythonAnywhere, so it works
+// on any network. To use a backend running on your laptop instead, start
+// Expo with EXPO_PUBLIC_API_URL set to the laptop's local IP address (not
+// "localhost" -- your phone can't resolve "localhost" as your laptop), e.g.
+// EXPO_PUBLIC_API_URL=http://192.168.1.20:5000, with both devices on the
+// same Wi-Fi. The address can also be changed in the app: Home -> settings.
 export const DEFAULT_API_BASE_URL =
-  process.env.EXPO_PUBLIC_API_URL || "http://192.168.8.153:5000"; // <-- EDIT THIS
+  process.env.EXPO_PUBLIC_API_URL || "https://seymatt.pythonanywhere.com";
 
 let baseUrl = DEFAULT_API_BASE_URL;
 
@@ -62,5 +62,5 @@ export function getModelMetrics() {
 }
 
 export const CONNECTION_HELP =
-  "I can't reach the Tymeout server right now. Is app.py running on your laptop, and is your " +
-  "phone on the same Wi-Fi? You can check the address in Settings.";
+  "I can't reach the Tymeout server right now. Check your internet connection and try again. " +
+  "You can check the server address in Settings.";

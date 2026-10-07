@@ -21,18 +21,19 @@ npm install
 
 ## 3. Point the app at the backend
 
-Open `src/api/client.js` and set:
+The app uses the hosted backend at <https://seymatt.pythonanywhere.com> by
+default (`DEFAULT_API_BASE_URL` in `src/api/client.js`), so it works on any
+network. To use a backend running on your laptop instead, start Expo with
+the laptop's Wi-Fi address (`ipconfig` on Windows), not "localhost":
 
-```js
-export const DEFAULT_API_BASE_URL =
-  process.env.EXPO_PUBLIC_API_URL || "http://192.168.8.153:5000"; // <-- EDIT THIS
+```bash
+EXPO_PUBLIC_API_URL=http://<laptop-ip>:5000 npx expo start
+# Windows (PowerShell): $env:EXPO_PUBLIC_API_URL="http://<laptop-ip>:5000"; npx expo start
 ```
 
-Replace the IP with your laptop's Wi-Fi address (`ipconfig` on Windows).
-Release builds set `EXPO_PUBLIC_API_URL` to the hosted backend instead
-(section 4b), so the IP only matters for local development.
-If the address changes later, it can also be updated inside the app
-under **Home > settings icon > Connection**, which has a **Test** button.
+The phone and laptop must then be on the same Wi-Fi. The address can also
+be changed inside the app under **Home > settings icon > Connection**,
+which has a **Test** button.
 
 ## 4. Run it
 
@@ -51,14 +52,16 @@ wide screen the app keeps a phone-sized column in the middle of the
 window. Check-in reminders are phone-only, because browsers cannot
 schedule local notifications; everything else works the same.
 
-To build the website for hosting:
+The website is published on GitHub Pages at
+<https://sey4192.github.io/ExAiSemProj/>. To rebuild it:
 
 ```bash
-EXPO_PUBLIC_API_URL=https://<api-service>.onrender.com npx expo export --platform web
+EXPO_BASE_URL=/ExAiSemProj npx expo export --platform web
 ```
 
-The site is written to `dist/`. The Render blueprint (`render.yaml`)
-builds and hosts it as the `tymeout` static site.
+The site is written to `dist/` (`app.config.js` applies the sub-path), and
+the contents of `dist/` plus an empty `.nojekyll` file go on the `gh-pages`
+branch.
 
 ## 4b. Build an installable APK (Android)
 
@@ -68,14 +71,14 @@ Requirements: JDK 17 and the Android SDK (platform 36, build-tools
 ```bash
 npx expo prebuild --platform android --clean
 cd android
-EXPO_PUBLIC_API_URL=https://<api-service>.onrender.com ./gradlew assembleRelease
-# Windows (PowerShell): $env:EXPO_PUBLIC_API_URL="https://..."; .\gradlew.bat assembleRelease
+./gradlew assembleRelease        # Windows: gradlew.bat assembleRelease
 ```
 
 The APK is written to `android/app/build/outputs/apk/release/app-release.apk`.
 The `android/` folder is generated from `app.json` and is not committed.
-`EXPO_PUBLIC_API_URL` points the installed app at the hosted backend, so
-it works on any network.
+The release build uses the hosted backend, so the installed app works on
+any network. Expo signs release builds with a debug key; re-sign the APK
+with your own release key (`apksigner`) before distributing it.
 
 The native build compiles a lot of C++ and needs plenty of free memory.
 On a laptop with 8 GB of RAM, close other programs first and limit Gradle

@@ -90,27 +90,31 @@ curl -X POST http://localhost:5000/predict \
 The response contains the risk label and probability, the SHAP and LIME
 explanations, and the selected intervention.
 
-## 8. Hosting online (Render)
+## 8. Hosting online (PythonAnywhere)
 
-The repository includes `render.yaml`, so the backend can be hosted on
-[Render](https://render.com)'s free tier:
+The backend is hosted on a free [PythonAnywhere](https://www.pythonanywhere.com)
+account, which needs no payment card. The live API is
+<https://seymatt.pythonanywhere.com> (for example `/health`).
 
-1. Sign in to Render with GitHub and choose **New > Blueprint**.
-2. Select this repository. Render reads `render.yaml`, installs the
-   pinned requirements, retrains the model from the fixed-seed simulation
-   (so it matches the committed results) and starts it with gunicorn
-   through `wsgi.py`, without Flask's debugger.
-3. When the deploy finishes, the API is available at
-   `https://<service-name>.onrender.com`, for example
-   `https://<service-name>.onrender.com/health`.
+To set up a new account:
 
-On the free tier the service sleeps after about 15 minutes without
-requests, and the first request afterwards can take up to a minute.
+1. On the **Web** tab, choose **Add a new web app**, then
+   **Manual configuration** and **Python 3.12**.
+2. Open a **Bash** console and run:
 
-The same blueprint also builds the web version of the Tymeout app as a
-static site (`tymeout`). It expects the API at
-`https://tymeout-api.onrender.com`; if Render assigns a different
-address, change `EXPO_PUBLIC_API_URL` in `render.yaml` to match.
+   ```bash
+   git clone https://github.com/Sey4192/ExAiSemProj.git
+   bash ExAiSemProj/backend/deploy/pythonanywhere_setup.sh
+   ```
+
+   The script installs Flask, SHAP and LIME (PythonAnywhere already
+   provides numpy, pandas and scikit-learn), retrains the model from the
+   fixed-seed simulation and points the web app at `wsgi.py`.
+3. Press **Reload** on the Web tab.
+
+To deploy later changes, run `git pull` in `~/ExAiSemProj` and press
+**Reload**. Free web apps must be renewed from the Web tab every month
+(**Run until 1 month from today**). A `Dockerfile` is also included for hosts that run containers.
 
 ## API reference
 
@@ -146,5 +150,5 @@ recall, F1 and feature importances), as reported in Chapter 4, Table 4.2.
   server starts. After that, a `/predict` request normally completes in
   well under a second on a laptop, within the 2-second target in
   Chapter 3 (Table 3.2).
-- The server runs in Flask's development mode and is intended for local
-  use on a trusted network only.
+- `python app.py` runs Flask's development server, intended for local use
+  on a trusted network only; hosted deployments use `wsgi.py`.
