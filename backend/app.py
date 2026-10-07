@@ -214,7 +214,7 @@ def simulate_session():
 
 @app.route("/metrics", methods=["GET"])
 def metrics():
-    """Model performance metrics (Chapter 4, Table 4.2), for a
+    """Model performance metrics (Chapter 4, Table 4.3), for a
     developer-facing 'model performance' view (Chapter 3, Figure 3.2)."""
     if _metrics is None:
         return jsonify({"error": "No metrics file found. Run ml/train_model.py first."}), 404

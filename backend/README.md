@@ -142,7 +142,7 @@ pipeline.
 
 ### `GET /metrics`
 Returns the trained model's evaluation metrics (accuracy, precision,
-recall, F1 and feature importances), as reported in Chapter 4, Table 4.2.
+recall, F1 and feature importances), as reported in Chapter 4, Table 4.3.
 
 ## Notes
 
