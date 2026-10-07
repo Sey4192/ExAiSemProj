@@ -1,12 +1,12 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors, spacing, type, fonts } from "../theme/theme";
 import { FEATURES, clockTime, percent, riskLevel } from "../utils/format";
 import { SurfaceCard } from "./Surface";
 
-export default function HistoryItem({ entry, onPress, style }) {
+export default function HistoryItem({ entry, onPress, onDelete, style }) {
   const { result } = entry;
   const level = riskLevel(result.risk_probability);
   const top = FEATURES[result.explanation.top_feature];
@@ -31,9 +31,23 @@ export default function HistoryItem({ entry, onPress, style }) {
           <Text style={styles.factor}>Mostly: {(top?.short || result.explanation.top_feature).toLowerCase()}</Text>
         </View>
       </View>
-      <View style={[styles.score, { backgroundColor: level.bg }]}>
+      <View style={[styles.score, { backgroundColor: level.bg }, onDelete && styles.scoreBeforeDelete]}>
         <Text style={[styles.scoreText, { color: level.color }]}>{percent(result.risk_probability)}</Text>
       </View>
+      {onDelete ? (
+        <Pressable
+          onPress={(e) => {
+            e?.stopPropagation?.(); // don't also open the check-in underneath
+            onDelete();
+          }}
+          hitSlop={8}
+          accessibilityRole="button"
+          accessibilityLabel="Delete this check-in"
+          style={({ pressed }) => [styles.delete, pressed && styles.deletePressed]}
+        >
+          <MaterialCommunityIcons name="trash-can-outline" size={18} color={colors.textMuted} />
+        </Pressable>
+      ) : null}
     </SurfaceCard>
   );
 }
@@ -58,4 +72,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   scoreText: { ...type.h3, fontVariant: ["tabular-nums"] },
+  scoreBeforeDelete: { marginRight: spacing.xs },
+  delete: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: spacing.sm,
+  },
+  deletePressed: { backgroundColor: colors.background },
 });

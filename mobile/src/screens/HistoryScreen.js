@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from "react";
-import { Alert, Pressable, SectionList, StyleSheet, View } from "react-native";
+import { Pressable, SectionList, StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { colors, radius, spacing, type, fonts } from "../theme/theme";
 import { useApp } from "../context/AppContext";
 import GradientHeader from "../components/GradientHeader";
 import HistoryItem from "../components/HistoryItem";
 import { EmptyState } from "../components/Surface";
-import { dayLabel } from "../utils/format";
+import { clockTime, dayLabel } from "../utils/format";
+import { confirm } from "../utils/confirm";
 import { TAB_BAR_SPACE } from "../components/TabBar";
 import { tap } from "../utils/haptics";
 
@@ -17,7 +18,7 @@ const FILTERS = [
 ];
 
 export default function HistoryScreen({ navigation }) {
-  const { history, clearHistory } = useApp();
+  const { history, clearHistory, deleteEntry } = useApp();
   const [filter, setFilter] = useState("all");
 
   const sections = useMemo(() => {
@@ -32,11 +33,25 @@ export default function HistoryScreen({ navigation }) {
     return groups;
   }, [history, filter]);
 
-  const confirmClear = () =>
-    Alert.alert("Start fresh?", "This clears all your check-ins from this phone. It can't be undone.", [
-      { text: "Cancel", style: "cancel" },
-      { text: "Clear", style: "destructive", onPress: clearHistory },
-    ]);
+  const confirmClear = async () => {
+    const ok = await confirm({
+      title: "Start fresh?",
+      message: "This clears all your check-ins from this device. It can't be undone.",
+      confirmText: "Clear all",
+      destructive: true,
+    });
+    if (ok) clearHistory();
+  };
+
+  const confirmDelete = async (entry) => {
+    const ok = await confirm({
+      title: "Delete this check-in?",
+      message: `${dayLabel(entry.timestamp)}, ${clockTime(entry.timestamp)}. It can't be undone.`,
+      confirmText: "Delete",
+      destructive: true,
+    });
+    if (ok) deleteEntry(entry.id);
+  };
 
   const openEntry = (entry) =>
     navigation.navigate(entry.result.risk_label === "high_risk" ? "Alert" : "LowRiskResult", { entry });
@@ -81,7 +96,7 @@ export default function HistoryScreen({ navigation }) {
       renderSectionHeader={({ section }) => <Text style={styles.day}>{section.title}</Text>}
       renderItem={({ item }) => (
         <View style={styles.item}>
-          <HistoryItem entry={item} onPress={() => openEntry(item)} />
+          <HistoryItem entry={item} onPress={() => openEntry(item)} onDelete={() => confirmDelete(item)} />
         </View>
       )}
       ListEmptyComponent={

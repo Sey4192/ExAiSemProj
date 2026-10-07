@@ -9,6 +9,7 @@ import { REMINDER_SLOTS, sendTestNotification } from "../notifications/notificat
 import GradientHeader from "../components/GradientHeader";
 import { IconBadge, SectionHeader, SurfaceCard } from "../components/Surface";
 import { tap } from "../utils/haptics";
+import { confirm } from "../utils/confirm";
 
 const REMINDER_ROWS = [
   { key: "morning", icon: "weather-sunset-up", ...REMINDER_SLOTS.morning },
@@ -85,11 +86,15 @@ export default function SettingsScreen({ navigation }) {
     }
   };
 
-  const confirmClear = () =>
-    Alert.alert("Start fresh?", "This clears all your check-ins from this phone. It can't be undone.", [
-      { text: "Cancel", style: "cancel" },
-      { text: "Clear", style: "destructive", onPress: clearHistory },
-    ]);
+  const confirmClear = async () => {
+    const ok = await confirm({
+      title: "Start fresh?",
+      message: "This clears all your check-ins from this device. It can't be undone.",
+      confirmText: "Clear all",
+      destructive: true,
+    });
+    if (ok) clearHistory();
+  };
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">

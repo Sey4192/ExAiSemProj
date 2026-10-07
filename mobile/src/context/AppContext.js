@@ -69,7 +69,21 @@ export function AppProvider({ children }) {
   const clearHistory = useCallback(async () => {
     await storage.clearHistory();
     setHistory([]);
-  }, []);
+    quietly(() => notifications.planReminders(reminders, []));
+  }, [reminders]);
+
+  const deleteEntry = useCallback(
+    (id) => {
+      setHistory((prev) => {
+        const next = prev.filter((h) => h.id !== id);
+        storage.saveHistory(next);
+        // Deleting today's only check-in brings tonight's reminder back.
+        quietly(() => notifications.planReminders(reminders, next));
+        return next;
+      });
+    },
+    [reminders]
+  );
 
   const completeOnboarding = useCallback(async () => {
     await storage.setOnboarded();
@@ -131,6 +145,7 @@ export function AppProvider({ children }) {
       notificationsAllowed,
       addResult,
       clearHistory,
+      deleteEntry,
       completeOnboarding,
       updateServerUrl,
       updateProfile,
@@ -147,6 +162,7 @@ export function AppProvider({ children }) {
       notificationsAllowed,
       addResult,
       clearHistory,
+      deleteEntry,
       completeOnboarding,
       updateServerUrl,
       updateProfile,
