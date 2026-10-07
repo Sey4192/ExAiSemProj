@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors, fonts, radius, spacing, type } from "../theme/theme";
 import { SurfaceCard } from "./Surface";
 import { tap } from "../utils/haptics";
@@ -8,26 +9,26 @@ import { tap } from "../utils/haptics";
 export const MOODS = [
   {
     key: "calm",
-    emoji: "😌",
+    icon: "leaf",
     label: "Calm",
     reply: "Love that for you. Let's keep it that way.",
   },
   {
     key: "okay",
-    emoji: "🙂",
+    icon: "weather-partly-cloudy",
     label: "Okay",
     reply: "Okay is perfectly okay. I'm here if that changes.",
   },
   {
     key: "restless",
-    emoji: "😣",
+    icon: "lightning-bolt-outline",
     label: "Restless",
     reply: "Restless scrolling happens to everyone. Want to check how this session's going?",
     action: { label: "Check in", to: "Check" },
   },
   {
     key: "drained",
-    emoji: "😮‍💨",
+    icon: "battery-low",
     label: "Drained",
     reply: "That sounds tiring. A one-minute breather might help more than another scroll.",
     action: { label: "Take a breather", to: "Break" },
@@ -59,7 +60,7 @@ export default function MoodCheck({ mood, onSelect, onAction }) {
               accessibilityLabel={m.label}
               accessibilityState={{ selected: active }}
             >
-              <Text style={styles.emoji}>{m.emoji}</Text>
+              <MaterialCommunityIcons name={m.icon} size={24} color={active ? colors.primary : colors.textMuted} />
               <Text style={[styles.moodLabel, active && styles.moodLabelActive]}>{m.label}</Text>
             </Pressable>
           );
@@ -98,7 +99,6 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
   },
   moodActive: { backgroundColor: colors.primaryLight, borderColor: colors.primary },
-  emoji: { fontSize: 24 },
   moodLabel: { ...type.caption, color: colors.textMuted, marginTop: 4 },
   moodLabelActive: { color: colors.primary, fontFamily: fonts.bold },
   reply: {

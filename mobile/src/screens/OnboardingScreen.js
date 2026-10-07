@@ -13,7 +13,7 @@ import { tap } from "../utils/haptics";
 const SLIDES = [
   {
     key: "hello",
-    title: "Hey, I'm Tymeout 👋",
+    title: "Hey, I'm Tymeout",
     text: "I'm here to help you notice when scrolling stops feeling good. No judgement, no lectures, and I won't take over your phone.",
   },
   {

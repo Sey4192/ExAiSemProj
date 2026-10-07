@@ -19,8 +19,8 @@ export const REMINDER_SLOTS = {
     label: "Morning intention",
     detail: "9:00 AM · set the tone for the day",
     messages: [
-      { title: "Morning 🌱", body: "What's one thing you'd rather do with your time today than scroll?" },
-      { title: "Good morning", body: "Before the feeds pull you in: how do you want today to feel?" },
+      { title: "Good morning", body: "What's one thing you'd rather do with your time today than scroll?" },
+      { title: "Morning check", body: "Before the feeds pull you in: how do you want today to feel?" },
       { title: "A fresh start", body: "Want to decide now how much phone time today deserves?" },
     ],
   },
@@ -41,7 +41,7 @@ export const REMINDER_SLOTS = {
     label: "Late-night wind-down",
     detail: "11:00 PM · a nudge towards rest",
     messages: [
-      { title: "It's getting late 🌙", body: "Your sleep will thank you. Ready to put the phone down for tonight?" },
+      { title: "It's getting late", body: "Your sleep will thank you. Ready to put the phone down for tonight?" },
       { title: "Still up?", body: "Late-night scrolling tends to run long. Want to call it a night?" },
       { title: "Time to rest", body: "Whatever's on there will still be there tomorrow. Sleep well." },
     ],
@@ -190,7 +190,7 @@ export async function setCompanion(enabled) {
 
 export async function sendTestNotification() {
   await Notifications.scheduleNotificationAsync({
-    content: content({ title: "This is how I'll check in 👋", body: "Gentle, quiet, and only as often as you choose." }, "Home", {
+    content: content({ title: "This is how I'll check in", body: "Gentle, quiet, and only as often as you choose." }, "Home", {
       kind: "test",
     }),
     trigger: {

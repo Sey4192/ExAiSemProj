@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { gradients, radius, spacing, type, fonts } from "../theme/theme";
 
@@ -50,7 +51,11 @@ export default function BreakScreen({ navigation }) {
       <View style={styles.center}>
         <View style={styles.halo}>
           <Animated.View style={[styles.circle, { transform: [{ scale: done ? 0.8 : scale }] }]}>
-            <Text style={styles.phase}>{done ? "✓" : inhale ? "Breathe in" : "Breathe out"}</Text>
+            {done ? (
+              <MaterialCommunityIcons name="check" size={44} color="#fff" accessibilityLabel="Done" />
+            ) : (
+              <Text style={styles.phase}>{inhale ? "Breathe in" : "Breathe out"}</Text>
+            )}
           </Animated.View>
         </View>
         <Text style={styles.timer}>
