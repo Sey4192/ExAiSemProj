@@ -8,11 +8,6 @@ import ContributionBar, { ContributionLegend } from "../components/ContributionB
 import { IconBadge, Pill, SurfaceCard } from "../components/Surface";
 import { FEATURES, contributionPhrase, featureLabel, percent, riskLevel } from "../utils/format";
 
-// This is the screen we deliberately spent the most design effort on
-// (per the project's own design-priority decision): it's the one that
-// embodies the actual thesis of the project -- explainable AI you can
-// trust. Shows both SHAP and LIME per Chapter 4's finding that they
-// agree strongly (Spearman rho = 0.83) but not perfectly.
 export default function ExplanationScreen({ route, navigation }) {
   const { entry } = route.params;
   const { result } = entry;

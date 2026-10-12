@@ -1,8 +1,6 @@
 import { Alert, Platform } from "react-native";
 
-// Asks a yes/no question and resolves to true if the user confirms.
-// React Native's Alert does nothing in a web browser, so the web version
-// uses the browser's own confirm dialog instead.
+// Alert does nothing in a browser, so the web version uses window.confirm.
 export function confirm({ title, message, confirmText = "OK", destructive = false }) {
   if (Platform.OS === "web") {
     return Promise.resolve(window.confirm(message ? `${title}\n\n${message}` : title));

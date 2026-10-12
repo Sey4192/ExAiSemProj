@@ -4,8 +4,6 @@ import { Text } from "react-native-paper";
 import Svg, { Circle } from "react-native-svg";
 import { colors, fonts } from "../theme/theme";
 
-// Circular gauge showing the model's risk probability. The arc animates
-// in so the number feels "measured" rather than just printed.
 export default function RiskGauge({
   value = 0,
   size = 132,

@@ -1,9 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Everything is stored only on the device -- usage data never leaves
-// the phone except to be scored by your own backend.
-// Keys keep the original "exai" prefix from before the app was renamed to
-// Tymeout, so check-ins already saved on a phone are not lost.
+// Keys keep the pre-rename "exai" prefix so saved check-ins survive the rename.
 const KEYS = {
   history: "exai.history.v1",
   onboarded: "exai.onboarded.v1",
@@ -12,8 +9,6 @@ const KEYS = {
   reminders: "exai.reminders.v1",
 };
 
-// What the user lets the app do in the background. Gentle by default:
-// one evening check-in and a follow-up after a heavy session.
 export const DEFAULT_REMINDERS = {
   morning: false,
   evening: true,
@@ -62,7 +57,6 @@ export async function saveServerUrl(url) {
   else await AsyncStorage.removeItem(KEYS.serverUrl);
 }
 
-// { name, mood: { key, at } } -- the small personal touches.
 export async function loadProfile() {
   return readJson(KEYS.profile, {});
 }

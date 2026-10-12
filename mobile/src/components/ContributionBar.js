@@ -5,16 +5,11 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors, spacing, type, fonts } from "../theme/theme";
 import { FEATURES } from "../utils/format";
 
-// Diverging bar centred on zero: bars to the right pushed the session
-// towards high risk, bars to the left pulled it towards low risk. This
-// keeps the sign of each SHAP/LIME value, which a plain magnitude bar
-// would hide. Deliberately dependency-free rather than a chart library,
-// so it runs in Expo Go with no native-module risk.
+// Diverging bar: right of centre raised the risk, left of centre lowered it.
 export default function ContributionBar({ feature, value, maxValue, color, highlight }) {
   const meta = FEATURES[feature] || { short: feature, icon: "circle-small" };
   const pct = maxValue > 0 ? Math.max(3, (Math.abs(value) / maxValue) * 100) : 3;
   const positive = value >= 0;
-  // Values that round to zero shouldn't show a sign ("−0.000").
   const shown = Math.abs(value) < 0.0005 ? "0.000" : `${positive ? "+" : "−"}${Math.abs(value).toFixed(3)}`;
 
   return (

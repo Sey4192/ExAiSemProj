@@ -1,13 +1,4 @@
-"""
-Supplementary evaluation of the Prediction Engine (Chapter 4, Section 4.8.1).
-
-Run after train_model.py. Uses the same data, split and hyperparameters,
-and adds:
-  - stratified 5-fold cross-validation on the full simulated dataset,
-  - threshold-independent metrics on the test set (ROC AUC, average precision),
-  - precision/recall at several decision thresholds (the recall trade-off),
-  - ROC and precision-recall curves (figures/roc_pr_curves.png).
-"""
+"""Cross-validation, ROC/PR curves and threshold analysis; run after train_model.py."""
 import json
 from pathlib import Path
 

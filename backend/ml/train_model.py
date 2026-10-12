@@ -1,7 +1,4 @@
-"""
-Prediction Engine: trains and evaluates a Random Forest classifier on the
-simulated session dataset (Chapter 3, Section 3.15).
-"""
+"""Trains and evaluates the Random Forest classifier."""
 from pathlib import Path
 HERE = Path(__file__).resolve().parent
 RESULTS_DIR = HERE.parent / "results"
@@ -64,10 +61,8 @@ def train_and_evaluate():
     cm = confusion_matrix(y_test, y_pred)
     report = classification_report(y_test, y_pred, target_names=["Low-risk", "High-risk"])
 
-    # Feature importances (built-in RF importance, for reference alongside SHAP)
     importances = dict(zip(FEATURES, model.feature_importances_.round(4)))
 
-    # Save artifacts
     joblib.dump(model, str(RESULTS_DIR / "rf_model.joblib"))
     X_train.to_csv(str(RESULTS_DIR / "X_train.csv"), index=False)
     X_test.to_csv(str(RESULTS_DIR / "X_test.csv"), index=False)
@@ -80,7 +75,6 @@ def train_and_evaluate():
     with open(str(RESULTS_DIR / "classification_report.txt"), "w") as f:
         f.write(report)
 
-    # Confusion matrix figure
     fig, ax = plt.subplots(figsize=(4.2, 3.8))
     im = ax.imshow(cm, cmap="Blues")
     ax.set_xticks([0, 1]); ax.set_xticklabels(["Low-risk", "High-risk"])
@@ -96,7 +90,6 @@ def train_and_evaluate():
     fig.savefig(str(FIGURES_DIR / "confusion_matrix.png"), dpi=200)
     plt.close(fig)
 
-    # Feature importance bar chart (built-in RF importances)
     fig, ax = plt.subplots(figsize=(5.5, 3.6))
     names = list(importances.keys())
     vals = list(importances.values())

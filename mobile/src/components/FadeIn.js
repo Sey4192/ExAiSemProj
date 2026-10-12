@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, Easing } from "react-native";
 
-// Fades and lifts its children into place. Give consecutive sections an
-// increasing `index` for a gentle staggered entrance.
 export default function FadeIn({ index = 0, distance = 14, style, children }) {
   const progress = useRef(new Animated.Value(0)).current;
 

@@ -4,8 +4,6 @@ import { Text } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors, radius, shadow, spacing, type, fonts } from "../theme/theme";
 
-// White rounded card used across the app. Pass onPress to make it
-// tappable (with a subtle pressed state).
 export function SurfaceCard({ children, style, onPress, padded = true }) {
   const content = [styles.card, padded && styles.padded, style];
   if (!onPress) return <View style={content}>{children}</View>;

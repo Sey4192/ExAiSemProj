@@ -7,8 +7,7 @@ import { registerBackgroundTask } from "../notifications/backgroundTask";
 
 const AppContext = createContext(null);
 
-// Notification calls are best-effort: they can fail on web or if the OS
-// refuses, and that must never break the app itself.
+// Notification calls are best-effort and must never break the app.
 const quietly = (fn) => fn().catch(() => {});
 
 export function AppProvider({ children }) {
@@ -56,7 +55,6 @@ export function AppProvider({ children }) {
       setHistory((prev) => {
         const next = [entry, ...prev];
         storage.saveHistory(next);
-        // Checking in counts for today, so tonight's reminder can be skipped.
         quietly(() => notifications.planReminders(reminders, next));
         return next;
       });
@@ -77,7 +75,6 @@ export function AppProvider({ children }) {
       setHistory((prev) => {
         const next = prev.filter((h) => h.id !== id);
         storage.saveHistory(next);
-        // Deleting today's only check-in brings tonight's reminder back.
         quietly(() => notifications.planReminders(reminders, next));
         return next;
       });
@@ -105,8 +102,6 @@ export function AppProvider({ children }) {
     });
   }, []);
 
-  // Asks the OS for permission (only ever after the user has said yes in
-  // our own words first), then starts reminders and background refresh.
   const enableNotifications = useCallback(async () => {
     let granted = false;
     await quietly(async () => {
@@ -180,9 +175,6 @@ export function useApp() {
   return ctx;
 }
 
-// Runs one check against the backend (a simulated session, or the
-// user's own numbers), stores it in history and opens the matching
-// result screen -- the Dashboard -> Alert/Result flow from Figure 4.1.
 export function useRunCheck(navigation) {
   const { addResult } = useApp();
   const [loading, setLoading] = useState(false);

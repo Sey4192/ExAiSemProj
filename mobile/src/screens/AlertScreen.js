@@ -15,11 +15,6 @@ const INTERVENTIONS = {
   motivational_message: { icon: "hand-heart-outline", label: "You've got this" },
 };
 
-// High-risk intervention screen (wireframe Screen 2). Deliberately calm:
-// warm amber rather than red, no shame-based language, no sound or
-// vibration -- a digital-wellbeing app that itself feels
-// anxiety-inducing would work against its own purpose (Chapter 3,
-// Section 3.7).
 export default function AlertScreen({ route, navigation }) {
   const insets = useSafeAreaInsets();
   const { entry } = route.params;

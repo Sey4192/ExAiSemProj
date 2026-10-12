@@ -33,8 +33,6 @@ const SLIDES = [
   },
 ];
 
-// Small illustrations built from the app's own UI pieces, so the
-// onboarding previews what the user will actually see.
 function SlideArt({ slide, name }) {
   if (slide === "hello") {
     return (
@@ -136,8 +134,7 @@ export default function OnboardingScreen() {
     goTo(index + 1);
   };
 
-  // Our own question comes first; the system permission prompt only
-  // appears after the user has said yes to it.
+  // Ask in our own words first; the system prompt only follows a yes.
   const finish = async (allowNotifications) => {
     tap();
     if (name.trim()) await updateProfile({ name: name.trim() });

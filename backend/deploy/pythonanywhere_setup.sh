@@ -1,12 +1,8 @@
 #!/bin/bash
-# Sets up the EXAI backend on a free PythonAnywhere account.
-# Run in a PythonAnywhere Bash console, after creating a web app with
-# "Manual configuration" and Python 3.12 on the Web tab:
-#   git clone https://github.com/Sey4192/ExAiSemProj.git
-#   bash ExAiSemProj/backend/deploy/pythonanywhere_setup.sh
+# Sets up the backend on PythonAnywhere (see backend/README.md, section 8).
 set -e
 PY=python3.12
-cd "$(dirname "$0")/.."   # the backend folder
+cd "$(dirname "$0")/.."
 BACKEND="$(pwd)"
 
 echo "Installing libraries (uses PythonAnywhere's own numpy, pandas and scikit-learn)..."
@@ -16,7 +12,6 @@ echo "Generating the simulated data and training the model..."
 $PY ml/generate_data.py
 $PY ml/train_model.py
 
-# Point the web app at the Flask app and reload it.
 DOMAIN="${USER,,}_pythonanywhere_com"
 WSGI="/var/www/${DOMAIN}_wsgi.py"
 if [ ! -f "$WSGI" ]; then

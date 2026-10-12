@@ -9,9 +9,6 @@ import { gradients, radius, spacing, type, fonts } from "../theme/theme";
 const TOTAL_SECONDS = 60;
 const PHASE_MS = 4000; // 4s in, 4s out
 
-// What "Take a break" on the Alert screen leads to: a one-minute paced
-// breathing exercise, so the intervention offers something to do rather
-// than only telling the user to stop.
 export default function BreakScreen({ navigation }) {
   const insets = useSafeAreaInsets();
   const scale = useRef(new Animated.Value(0.6)).current;

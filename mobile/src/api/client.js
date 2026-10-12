@@ -1,10 +1,4 @@
-// API client for the Flask backend (see backend/README.md).
-// By default the app uses the hosted backend on PythonAnywhere, so it works
-// on any network. To use a backend running on your laptop instead, start
-// Expo with EXPO_PUBLIC_API_URL set to the laptop's local IP address (not
-// "localhost" -- your phone can't resolve "localhost" as your laptop), e.g.
-// EXPO_PUBLIC_API_URL=http://192.168.1.20:5000, with both devices on the
-// same Wi-Fi. The address can also be changed in the app: Home -> settings.
+// Defaults to the hosted backend; set EXPO_PUBLIC_API_URL to use a local one.
 export const DEFAULT_API_BASE_URL =
   process.env.EXPO_PUBLIC_API_URL || "https://seymatt.pythonanywhere.com";
 

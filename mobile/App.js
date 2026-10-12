@@ -32,8 +32,7 @@ import OnboardingScreen from "./src/screens/OnboardingScreen";
 import TabBar from "./src/components/TabBar";
 import { WEB_FRAME_WIDTH, isFramed } from "./src/utils/layout";
 import * as Notifications from "expo-notifications";
-// Imported for its side effect: defines the background task at startup,
-// which the OS requires before it can run the task with the app closed.
+// Side effect: defines the background task before the app renders.
 import "./src/notifications/backgroundTask";
 
 const Stack = createNativeStackNavigator();
@@ -55,15 +54,12 @@ function Splash({ fontsReady }) {
   return (
     <LinearGradient colors={gradients.primary} style={styles.splash}>
       <MaterialCommunityIcons name="leaf" size={48} color="#fff" />
-      {/* The brand font may not be loaded yet, so only use it once it is. */}
       <Text style={[styles.splashText, !fontsReady && { fontFamily: undefined, fontWeight: "800" }]}>Tymeout</Text>
       <ActivityIndicator color="#fff" style={{ marginTop: 24 }} />
     </LinearGradient>
   );
 }
 
-// Opens the right screen when the user taps a notification (or its
-// "Check in" button), including when the tap is what launched the app.
 function NotificationRouter({ navReady }) {
   const response = Notifications.useLastNotificationResponse();
 
@@ -104,8 +100,7 @@ function Root({ fontsReady }) {
   );
 }
 
-// On a computer's browser the app keeps a phone-sized column in the
-// middle of the window, so its layouts aren't stretched edge to edge.
+// On wide browser windows the app keeps a phone-sized column.
 function WebFrame({ children }) {
   const { width } = useWindowDimensions();
   if (!isFramed(width)) return children;
@@ -117,7 +112,6 @@ function WebFrame({ children }) {
 }
 
 export default function App() {
-  // If a font fails to load we still start; text falls back to the system font.
   const [fontsLoaded, fontError] = useFonts({
     PlusJakartaSans_400Regular,
     PlusJakartaSans_500Medium,

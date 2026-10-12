@@ -1,8 +1,5 @@
-"""
-Unit and functional tests for the Prediction Engine and Explainability
-Module (Chapter 4, Section 4.3 - System Testing).
-
-Run with: pytest -v test_pipeline.py
+"""Tests for the data simulation, model, explainability results and
+persuasion rules. Run with: pytest -v test_pipeline.py
 """
 from pathlib import Path
 HERE = Path(__file__).resolve().parent
@@ -23,8 +20,6 @@ from generate_data import generate_dataset
 
 FEATURES = ["screen_time_hrs", "frequency", "session_duration_min", "hour_of_day"]
 
-
-# ---------- Data generation tests ----------
 
 def test_generate_dataset_shape():
     df = generate_dataset(n_sessions=500, seed=1)
@@ -47,8 +42,6 @@ def test_generate_dataset_value_ranges():
 
 
 def test_generate_dataset_class_balance_not_degenerate():
-    """Both classes should be meaningfully represented (not a trivial
-    all-one-class dataset, which would make accuracy meaningless)."""
     df = generate_dataset(n_sessions=3000, seed=3)
     positive_rate = df["high_risk"].mean()
     assert 0.15 < positive_rate < 0.85
@@ -59,8 +52,6 @@ def test_generate_dataset_reproducible_with_seed():
     df2 = generate_dataset(n_sessions=300, seed=7)
     pd.testing.assert_frame_equal(df1, df2)
 
-
-# ---------- Trained model tests ----------
 
 @pytest.fixture(scope="module")
 def trained_model():
@@ -81,12 +72,10 @@ def test_model_predict_proba_sums_to_one(trained_model):
 
 
 def test_model_meets_minimum_accuracy_threshold():
-    """Sanity check: model must beat a naive majority-class baseline
-    on held-out data (Chapter 1, Section 1.7 evaluation metrics)."""
     import json
     with open(str(RESULTS_DIR / "metrics.json")) as f:
         metrics = json.load(f)["metrics"]
-    majority_baseline = 1 - metrics["class_balance_test"]  # accuracy of always predicting majority class
+    majority_baseline = 1 - metrics["class_balance_test"]
     assert metrics["accuracy"] > majority_baseline, (
         "Model should outperform the majority-class baseline"
     )
@@ -97,8 +86,6 @@ def test_model_feature_importances_nonzero_for_all_features(trained_model):
     assert len(importances) == len(FEATURES)
     assert all(imp > 0 for imp in importances), "Every feature should contribute some importance"
 
-
-# ---------- Explainability output tests ----------
 
 def test_explainability_results_file_structure():
     import json
@@ -118,12 +105,8 @@ def test_explainability_agreement_rate_within_valid_range():
     assert -1.0 <= results["mean_spearman_rho_shap_vs_lime"] <= 1.0
 
 
-# ---------- Persuasion engine (intervention selection) tests ----------
-
 def select_intervention(risk_prob: float, top_feature: str) -> str:
-    """Simple rule-based intervention-selection logic for the
-    Persuasion Engine (Chapter 3, Section 3.3), used here to test that
-    the selection logic is well-defined and total (covers all inputs)."""
+    """Same rules as select_intervention in app.py."""
     if risk_prob < 0.5:
         return "none"
     if top_feature == "session_duration_min":
@@ -132,7 +115,7 @@ def select_intervention(risk_prob: float, top_feature: str) -> str:
         return "reminder"
     if top_feature == "screen_time_hrs":
         return "motivational_message"
-    return "reminder"  # default fallback (e.g. hour_of_day)
+    return "reminder"
 
 
 @pytest.mark.parametrize("risk_prob,top_feature,expected", [
@@ -147,8 +130,6 @@ def test_intervention_selection_rules(risk_prob, top_feature, expected):
 
 
 def test_intervention_selection_is_total():
-    """Every combination of risk probability and feature must map to
-    SOME defined intervention (no undefined/None outputs)."""
     for risk_prob in [0.0, 0.3, 0.51, 0.9, 1.0]:
         for feat in FEATURES:
             result = select_intervention(risk_prob, feat)

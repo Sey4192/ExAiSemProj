@@ -1,6 +1,5 @@
 import { colors } from "../theme/theme";
 
-// One place for how each model feature is named and shown to the user.
 export const FEATURES = {
   screen_time_hrs: {
     label: "Your screen time today",
@@ -59,9 +58,7 @@ export function percent(p) {
   return `${Math.round(Number(p) * 100)}%`;
 }
 
-// The model makes a binary call at 0.5; the "moderate" band is only a
-// display nuance so a 51% session doesn't read the same as a 95% one.
-// Labels describe how a session *felt*, not a clinical risk class.
+// The model's cut-off is 0.5; the "moderate" band is for display only.
 export function riskLevel(prob) {
   if (prob >= 0.7) return { key: "high", label: "Heavy session", color: colors.high, bg: colors.highBg };
   if (prob >= 0.5) return { key: "medium", label: "Getting heavy", color: colors.medium, bg: colors.mediumBg };
@@ -97,7 +94,6 @@ export function dayLabel(ts) {
   return d.toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "short" });
 }
 
-// Plain-language reading of one SHAP value, for the explanation screen.
 export function contributionPhrase(value) {
   const a = Math.abs(value);
   if (value >= 0) {

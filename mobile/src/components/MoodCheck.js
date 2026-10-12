@@ -37,8 +37,7 @@ export const MOODS = [
 
 const TWO_HOURS = 2 * 60 * 60 * 1000;
 
-// A light, optional emotional check-in. Answers stay on the phone and
-// only shape the reply shown here; they aren't sent to the model.
+// Moods stay on the device; they are not sent to the model.
 export default function MoodCheck({ mood, onSelect, onAction }) {
   const recent = mood && Date.now() - mood.at < TWO_HOURS ? MOODS.find((m) => m.key === mood.key) : null;
 

@@ -12,9 +12,7 @@ import { TAB_BAR_SPACE } from "../components/TabBar";
 import { ErrorNote, SectionHeader, SurfaceCard } from "../components/Surface";
 import { FEATURES } from "../utils/format";
 
-// Ranges match what the model was trained on (ml/generate_data.py), so
-// the user can't ask it about sessions it has never seen.
-// The analyse button floats over content, so it gets its own lift.
+// Ranges match the training data (ml/generate_data.py).
 const shadowLift = {
   shadowColor: colors.primary,
   shadowOpacity: 0.3,

@@ -14,8 +14,6 @@ const ICONS = {
   Insights: ["chart-box", "chart-box-outline"],
 };
 
-// Floating, frosted tab bar. The active tab grows into a tinted pill with
-// its label; inactive tabs show only their icon, keeping the bar calm.
 export default function TabBar({ state, navigation }) {
   const insets = useSafeAreaInsets();
 
@@ -107,5 +105,4 @@ const styles = StyleSheet.create({
   label: { fontFamily: fonts.bold, fontSize: 13, color: colors.primary },
 });
 
-// Space screens should leave at the bottom so content clears the bar.
 export const TAB_BAR_SPACE = 104;

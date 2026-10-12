@@ -1,9 +1,6 @@
-# Container for hosting the EXAI backend (used by the Hugging Face Space).
-# The model is retrained at build time from the fixed-seed simulation, so it
-# matches the committed results exactly.
+# Backend container; retrains the fixed-seed model at build time.
 FROM python:3.12-slim
 
-# Hugging Face Spaces run containers as user 1000.
 RUN useradd -m -u 1000 user
 USER user
 ENV PATH=/home/user/.local/bin:$PATH \

@@ -15,7 +15,6 @@ export default function LowRiskResultScreen({ route, navigation }) {
   const { result } = entry;
   const { risk_probability, input, explanation } = result;
 
-  // The factor that did most to keep this session healthy (most negative SHAP).
   const helper = Object.entries(explanation.shap).sort((a, b) => a[1] - b[1])[0];
   const helperKey = helper && helper[1] < 0 ? helper[0] : null;
 

@@ -6,9 +6,7 @@ import { colors, radius, spacing, type, fonts } from "../theme/theme";
 import { IconBadge } from "./Surface";
 import { tap } from "../utils/haptics";
 
-// Number input built from -/+ buttons rather than a keyboard, so values
-// always stay inside the range the model was trained on. Holding a
-// button repeats the step.
+// +/- buttons keep values inside the range the model was trained on.
 export default function Stepper({ icon, label, hint, value, display, min, max, step, onChange }) {
   const timer = useRef(null);
   const valueRef = useRef(value);

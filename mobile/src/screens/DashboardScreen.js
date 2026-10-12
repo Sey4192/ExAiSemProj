@@ -21,10 +21,6 @@ const TIPS = [
   { icon: "timer-outline", text: "Before you open an app, try deciding how long you'll stay. It's easier to stop when you've chosen." },
 ];
 
-// Dashboard / Usage screen (Chapter 3, Figure 3.2's "View usage statistics"
-// use case; wireframe Screen 1). Real on-device usage tracking is future
-// work (Chapter 5, Section 5.6), so the stats shown are from the most
-// recent session scored by the model rather than live tracking.
 export default function DashboardScreen({ navigation }) {
   const { history, profile, updateProfile } = useApp();
   const { run, loading, error, clearError } = useRunCheck(navigation);

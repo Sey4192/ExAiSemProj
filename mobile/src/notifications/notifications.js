@@ -2,16 +2,12 @@ import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
 import { colors } from "../theme/theme";
 
-// Local notifications only: everything is scheduled on the phone, so it
-// works in Expo Go and nothing is sent from a server.
-
 const CHANNEL_CHECKINS = "checkins";
 const CHANNEL_COMPANION = "companion";
 const CATEGORY_CHECKIN = "checkin";
 const COMPANION_ID = "exai-companion"; // pre-rename ID, so an existing pinned notification can still be removed
 const DAYS_AHEAD = 3;
 
-// Each slot has a few phrasings so reminders don't feel copy-pasted.
 export const REMINDER_SLOTS = {
   morning: {
     hour: 9,
@@ -72,7 +68,6 @@ export async function configureNotifications() {
       importance: Notifications.AndroidImportance.DEFAULT,
       lightColor: colors.primary,
     });
-    // Silent and low priority, so the always-there shortcut never buzzes.
     await Notifications.setNotificationChannelAsync(CHANNEL_COMPANION, {
       name: "Quick check-in shortcut",
       description: "Keeps Tymeout one tap away in your notifications",
@@ -124,11 +119,7 @@ function checkedInToday(history) {
   return history.some((h) => h.timestamp >= start.getTime());
 }
 
-// Re-plans reminders for the next few days. Each reminder is a one-off
-// at an exact time (not a blind daily repeat), so the evening check-in can
-// be skipped on days the user has already checked in, and the wording
-// rotates. Called on launch, after each check, on settings changes and
-// from the background task.
+// One-off reminders for the next few days, so tonight's can be skipped after a check-in.
 export async function planReminders(prefs, history = []) {
   if (!(await getPermission()).granted) return;
   await cancelKind("reminder");
@@ -153,8 +144,6 @@ export async function planReminders(prefs, history = []) {
   }
 }
 
-// After a high-risk session, ask how the user is doing a couple of hours
-// later. Only one follow-up is ever pending.
 export async function scheduleFollowUp(prefs, delayMinutes = 120) {
   if (!prefs.followUps || !(await getPermission()).granted) return;
   await cancelKind("follow-up");
@@ -168,8 +157,6 @@ export async function scheduleFollowUp(prefs, delayMinutes = 120) {
   });
 }
 
-// An optional, silent notification that stays in the shade so a check-in
-// is always one tap away, without opening the app from the home screen.
 export async function setCompanion(enabled) {
   await Notifications.dismissNotificationAsync(COMPANION_ID).catch(() => {});
   if (!enabled || !(await getPermission()).granted) return;

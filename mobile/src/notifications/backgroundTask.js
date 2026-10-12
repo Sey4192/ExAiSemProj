@@ -3,14 +3,10 @@ import * as TaskManager from "expo-task-manager";
 import { loadHistory, loadReminders } from "../storage/storage";
 import { planReminders } from "./notifications";
 
-// Internal ID; keeps its pre-rename "exai" prefix so an already-registered task still matches.
+// Pre-rename ID, kept so an already-registered task still matches.
 export const BACKGROUND_TASK = "exai-background-refresh";
 
-// Runs every so often while the app is closed (the OS decides exactly
-// when; at most every ~15 min on Android). It keeps the next few days of
-// check-ins planned and fresh -- e.g. dropping tonight's evening
-// reminder once the user has already checked in -- without the app
-// being opened. Must be defined at module scope, before the app renders.
+// Must be defined at module scope, before the app renders.
 TaskManager.defineTask(BACKGROUND_TASK, async () => {
   try {
     const [prefs, history] = await Promise.all([loadReminders(), loadHistory()]);
@@ -30,8 +26,6 @@ export async function registerBackgroundTask() {
     }
     return true;
   } catch {
-    // Not available on this device/runtime (e.g. web): reminders still
-    // work, they're just re-planned when the app is opened instead.
     return false;
   }
 }

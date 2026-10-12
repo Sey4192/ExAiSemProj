@@ -1,24 +1,4 @@
-"""
-EXAI Backend API
------------------
-A small Flask API that wraps the existing prediction + explainability
-pipeline (Chapter 3, Section 3.3: Prediction Engine, Explainability
-Module, Persuasion Engine) so the React Native mobile app can call it
-over HTTP, rather than needing to run scikit-learn/SHAP/LIME inside
-the mobile app itself.
-
-Run this once first to make sure a trained model exists:
-    python ml/generate_data.py
-    python ml/train_model.py
-
-Then start the API:
-    python app.py
-
-It will listen on http://0.0.0.0:5000 by default. To test from your
-phone (via Expo Go), your phone and laptop must be on the SAME WiFi
-network, and the mobile app must point at your laptop's local IP
-address (not "localhost") -- e.g. http://192.168.1.23:5000
-"""
+"""Flask API serving the prediction, explanation and persuasion pipeline."""
 import json
 from pathlib import Path
 
@@ -36,12 +16,9 @@ RESULTS_DIR = HERE / "results"
 FEATURES = ["screen_time_hrs", "frequency", "session_duration_min", "hour_of_day"]
 
 app = Flask(__name__)
-CORS(app)  # allow the mobile app (different origin) to call this API
+CORS(app)
 
-# ---------------------------------------------------------------
-# Load model + training data ONCE at startup (not per-request --
-# that would be slow and would re-fit LIME's explainer every time).
-# ---------------------------------------------------------------
+# Loaded once at start-up; re-fitting LIME per request would be slow.
 _model = None
 _lime_explainer = None
 _shap_explainer = None
@@ -80,9 +57,7 @@ def load_everything():
 
 
 def select_intervention(risk_prob: float, top_feature: str) -> dict:
-    """Persuasion Engine (Chapter 3, Section 3.3 / Chapter 4, Section 4.5):
-    rule-based mapping from risk + top contributing feature to an
-    intervention type and a plain-language message."""
+    """Maps risk and the top contributing feature to an intervention."""
     if risk_prob < 0.5:
         return {"type": "none", "message": None}
 
@@ -107,15 +82,13 @@ def select_intervention(risk_prob: float, top_feature: str) -> dict:
 
 
 def explain_instance(features_dict):
-    """Runs prediction + SHAP + LIME for a single session, matching
-    the methodology in Chapter 4, Sections 4.3-4.5."""
+    """Predicts risk for one session and explains it with SHAP and LIME."""
     X = pd.DataFrame([features_dict])[FEATURES]
 
     proba = _model.predict_proba(X)[0]
     risk_prob = float(proba[1])
     risk_label = "high_risk" if risk_prob >= 0.5 else "low_risk"
 
-    # --- SHAP ---
     shap_values = _shap_explainer.shap_values(X)
     if isinstance(shap_values, list):
         shap_vals_class1 = shap_values[1][0]
@@ -125,7 +98,6 @@ def explain_instance(features_dict):
         shap_vals_class1 = shap_values[0]
     shap_contributions = {f: float(v) for f, v in zip(FEATURES, shap_vals_class1)}
 
-    # --- LIME ---
     lime_exp = _lime_explainer.explain_instance(
         X.values[0], _model.predict_proba, num_features=len(FEATURES), labels=(1,)
     )
@@ -135,9 +107,7 @@ def explain_instance(features_dict):
         match = [v for k, v in lime_weights_raw.items() if feat in k]
         lime_contributions[feat] = float(match[0]) if match else 0.0
 
-    # Top contributing feature per SHAP (used to drive the persuasion engine,
-    # consistent with Chapter 4, Section 4.9's finding that SHAP and LIME
-    # agree strongly but not always -- SHAP used as primary per that analysis)
+    # SHAP is the primary explanation, so it picks the top feature.
     top_feature = max(shap_contributions, key=lambda f: abs(shap_contributions[f]))
 
     intervention = select_intervention(risk_prob, top_feature)
@@ -155,10 +125,6 @@ def explain_instance(features_dict):
     }
 
 
-# ---------------------------------------------------------------
-# Routes
-# ---------------------------------------------------------------
-
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok", "model_loaded": _model is not None})
@@ -166,15 +132,6 @@ def health():
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    """
-    Expects JSON body:
-    {
-        "screen_time_hrs": 3.2,
-        "frequency": 22,
-        "session_duration_min": 45.0,
-        "hour_of_day": 23
-    }
-    """
     body = request.get_json(force=True, silent=True)
     if not body:
         return jsonify({"error": "Missing or invalid JSON body"}), 400
@@ -194,9 +151,7 @@ def predict():
 
 @app.route("/simulate_session", methods=["GET"])
 def simulate_session():
-    """Convenience endpoint for testing/demoing the app without a real
-    usage-tracking module built yet: generates one plausible random
-    session using the same distributions as ml/generate_data.py."""
+    """Scores a random session drawn from the simulation's distributions."""
     rng = np.random.default_rng()
     screen_time = float(np.clip(rng.lognormal(0.9, 0.45), 0.2, 10.0))
     frequency = int(np.clip(rng.poisson(18), 1, 80))
@@ -214,8 +169,6 @@ def simulate_session():
 
 @app.route("/metrics", methods=["GET"])
 def metrics():
-    """Model performance metrics (Chapter 4, Table 4.3), for a
-    developer-facing 'model performance' view (Chapter 3, Figure 3.2)."""
     if _metrics is None:
         return jsonify({"error": "No metrics file found. Run ml/train_model.py first."}), 404
     return jsonify(_metrics)

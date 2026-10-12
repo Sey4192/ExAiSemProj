@@ -6,8 +6,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { gradients, radius, spacing, type } from "../theme/theme";
 
-// Curved gradient hero used at the top of every main screen.
-// `onBack` shows a back arrow (for stack screens with no native header).
 export default function GradientHeader({
   eyebrow,
   title,
@@ -28,7 +26,6 @@ export default function GradientHeader({
       end={{ x: 1, y: 1 }}
       style={[styles.wrap, { paddingTop: insets.top + spacing.md }, compact && styles.compact]}
     >
-      {/* Soft decorative circles give the header depth without imagery. */}
       <View style={[styles.orb, styles.orbOne]} />
       <View style={[styles.orb, styles.orbTwo]} />
 

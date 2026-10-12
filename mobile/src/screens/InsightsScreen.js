@@ -31,8 +31,6 @@ const METRIC_INFO = [
   { key: "f1", label: "F1 score", text: "How well those last two balance out" },
 ];
 
-// Combines the user's own patterns (from saved checks) with the
-// developer-facing "model performance" view from Chapter 3, Figure 3.2.
 export default function InsightsScreen() {
   const { history } = useApp();
   const [metrics, setMetrics] = useState(null);

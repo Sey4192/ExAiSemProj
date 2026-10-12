@@ -1,8 +1,3 @@
-// Calm, minimal, trustworthy design language for a digital-wellbeing app.
-// Deliberately avoids bright/gamified colors -- the point of this app is
-// to reduce anxious engagement, not add to it (Chapter 3, Section 3.7).
-// High risk is shown in a warm amber rather than alarm red for the same
-// reason.
 import { Platform, StyleSheet } from "react-native";
 import { MD3LightTheme } from "react-native-paper";
 
@@ -33,8 +28,6 @@ export const colors = {
   decrease: "#7FAE96",
 };
 
-// Header gradients: calm blue for the app chrome, soft green/amber for
-// result screens so the outcome is felt before it is read.
 export const gradients = {
   primary: ["#2C4F68", "#3E6B89", "#5A8AA6"],
   low: ["#3F7A5C", "#4C8C6B", "#6FA88A"],
@@ -45,9 +38,7 @@ export const spacing = { xxs: 2, xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48 }
 
 export const radius = { sm: 8, md: 14, lg: 20, xl: 28, pill: 999 };
 
-// Plus Jakarta Sans, loaded in App.js. Each weight is its own font
-// family -- on Android, combining a custom fontFamily with fontWeight
-// falls back to faux-bold, so components pick a family, never a weight.
+// One family per weight: Android fakes bold when fontWeight is set on a custom font.
 export const fonts = {
   regular: "PlusJakartaSans_400Regular",
   medium: "PlusJakartaSans_500Medium",
@@ -67,8 +58,6 @@ export const type = {
   overline: { fontSize: 11, fontFamily: fonts.bold, letterSpacing: 1.2, textTransform: "uppercase" },
 };
 
-// Soft, wide shadow plus a hairline border: the border keeps cards
-// defined on Android/web where shadows are faint or missing.
 export const shadow = {
   borderWidth: StyleSheet.hairlineWidth,
   borderColor: "rgba(31,42,51,0.06)",
@@ -84,7 +73,6 @@ export const shadow = {
   }),
 };
 
-// Map Paper's type scale onto the same font families.
 function familyFor(weight) {
   const w = String(weight || "400");
   if (w === "bold" || Number(w) >= 700) return fonts.bold;
@@ -116,7 +104,6 @@ export const paperTheme = {
   roundness: 14,
 };
 
-// Navigation theme so screen transitions don't flash white behind cards.
 export const navTheme = {
   dark: false,
   colors: {
